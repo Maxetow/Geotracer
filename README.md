@@ -1,5 +1,7 @@
 # Geoguessr cheat by Maxetow
+This is only for educational, experimental purpose only.
 ## How to use
+
 ## Updates
 ## Mentions
 ## Download
