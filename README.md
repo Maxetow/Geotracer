@@ -4,8 +4,8 @@ This is a Tampermonkey tool to find the location automaticaly in geoguessr
 ## How to use
 1. **Installation**
    - Get tempermonkey in your firefox browser
-   - download this [script](<https://raw.githubusercontent.com/Maxetow/Geoguessr_location/main/Geoguessr Location Resolver (By maxetow)-1.0.user.js>)
-   - Enjoy
+   - Download this [script](<https://raw.githubusercontent.com/Maxetow/Geoguessr_location/main/Geoguessr Location Resolver (By maxetow)-1.0.user.js>)
+   - Enjoy (don't get banned)
      
 ## To do list
 > [!NOTE]
