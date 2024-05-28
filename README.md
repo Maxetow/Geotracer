@@ -1,7 +1,6 @@
-# Geoguessr cheat by Maxetow
-This is only for educational, experimental purpose only.
+# Geoguessr location finder
+This is a Tampermonkey tool to find the location automaticaly in geoguessr
 ## How to use
-
 1. **Installation**
    - Get tempermonkey in your firefox browser
    - Go to downloads here and download script
