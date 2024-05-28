@@ -6,13 +6,12 @@ This is only for educational, experimental purpose only.
    - Get tempermonkey in your firefox browser
    - Go to downloads here and download script
    - Enjoy
-2. **Tested game modes**
-   - single player
-3. **To do**
+## To do list
 > [!NOTE]
 > Useful information that users should know, even when skimming content.
    - [ ] be happy
    - [ ] fill text
+   - [ ] 2. **Tested game modes**
 ## Updates
 1.0 open updates and publication on github
 ## Mentions
