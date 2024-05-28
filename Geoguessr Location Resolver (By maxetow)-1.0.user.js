@@ -8,8 +8,8 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=geoguessr.com
 // @grant        none
 // @homepageURL  https://github.com/Maxetow/Geoguessr_location
-// @supportURL https://github.com/Maxetow/Geoguessr_location
-// @updateURL	  https://raw.githubusercontent.com/Maxetow/Geoguessr_location/main/Geoguessr Location Resolver (By maxetow)-1.0.user.js
+// @supportURL   https://github.com/Maxetow/Geoguessr_location
+// @updateURL	 https://raw.githubusercontent.com/Maxetow/Geoguessr_location/main/Geoguessr Location Resolver (By maxetow)-1.0.user.js
 // ==/UserScript==
 
 // We (Maxetow or any person assiated with this script) decline all responsability in case of ban or missuse of this script
