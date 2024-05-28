@@ -7,9 +7,9 @@ This is a Tampermonkey tool to find the location automaticaly in geoguessr
    - Enjoy
 ## To do list
 > [!NOTE]
-> Useful information that users should know, even when skimming content.
-   - [ ] be happy
-   - [ ] fill text
+> This is for the devs and if you want to bring something to this project
+   - [ ] make UI
+   - [ ] Correct x guesses
    - [ ] 2. **Tested game modes**
 ## Updates
 1.0 open updates and publication on github
