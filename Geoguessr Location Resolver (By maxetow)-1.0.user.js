@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Geoguessr Location Resolver (By maxetow)
 // @namespace    https://github.com/Maxetow/Geoguessr_location
-// @version      1.0
+// @version      1.1
 // @description  Features: press y to score 5000 Points | press x to score randomly between 4500 and 5000 points | press c to open in Google Maps (v to close image)
 // @author       Maxetow
 // @match        https://www.geoguessr.com/*
