@@ -7,7 +7,7 @@
 // @match        https://www.geoguessr.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=geoguessr.com
 // @grant        none
-// @homepageURL
+// @homepageURL  https://github.com/Maxetow/Geoguessr_location
 // @supportURL https://github.com/Maxetow/Geoguessr_location
 // @updateURL	  https://raw.githubusercontent.com/Maxetow/Geoguessr_location/main/Geoguessr Location Resolver (By maxetow)-1.0.user.js
 // ==/UserScript==
