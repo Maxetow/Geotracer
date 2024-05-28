@@ -13,7 +13,7 @@ This is a Tampermonkey tool to find the location automaticaly in geoguessr
    - [ ] make UI
    - [ ] Correct x guesses
    - [ ] 2. **Tested game modes**
-   - [ ] 
+         
 ## Mentions
 
 ## Download
