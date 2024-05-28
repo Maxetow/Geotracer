@@ -9,8 +9,8 @@ This is only for educational, experimental purpose only.
 2. **Tested game modes**
    - single player
 3. **To do**
-   [] be happy
-   [] fill text
+   [ ] be happy
+   [ ] fill text
 ## Updates
 1.0 open updates and publication on github
 ## Mentions
