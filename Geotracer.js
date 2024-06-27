@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Geoguessr Location Resolver (By maxetow)
-// @namespace    https://github.com/Maxetow/Geoguessr_location
-// @version      1.9
+// @name         Geotracer (By Maxetow)
+// @namespace    https://github.com/Maxetow/Geotracer
+// @version      2.0
 // @description  Features: press y to score 5000 Points | press c to open in Google Maps (Ctrl + c to close image) | Alt + x to open settings and customize key bindings
 // @author       Maxetow
 // @match        https://www.geoguessr.com/*
