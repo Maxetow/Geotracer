@@ -18,249 +18,128 @@
 let globalCoordinates = {
     lat: 0,
     lng: 0
-};
-
-// Default key bindings and settings
-let keyBindings = {
-    placeMarker: 'y',
-    openMap: 'c',
-    openSettings: 'x'
-};
-
-let settings = {
-    showCoordinates: false
-};
-
-// Load key bindings and settings from localStorage
-function loadSettings() {
-    const savedBindings = JSON.parse(localStorage.getItem('keyBindings'));
-    const savedSettings = JSON.parse(localStorage.getItem('settings'));
-    if (savedBindings) {
-        keyBindings = savedBindings;
-    }
-    if (savedSettings) {
-        settings = savedSettings;
-    }
 }
 
-// Intercepting API call to Google Street view
+let globalPanoID = undefined
+
 var originalOpen = XMLHttpRequest.prototype.open;
 XMLHttpRequest.prototype.open = function(method, url) {
     if (method.toUpperCase() === 'POST' &&
         (url.startsWith('https://maps.googleapis.com/$rpc/google.internal.maps.mapsjs.v1.MapsJsInternalService/GetMetadata') ||
-            url.startsWith('https://maps.googleapis.com/$rpc/google.internal.maps.mapsjs.v1.MapsJsInternalService/SingleImageSearch'))) {
+         url.startsWith('https://maps.googleapis.com/$rpc/google.internal.maps.mapsjs.v1.MapsJsInternalService/SingleImageSearch'))) {
 
         this.addEventListener('load', function () {
-            let interceptedResult = this.responseText;
+            let interceptedResult = this.responseText
             const pattern = /-?\d+\.\d+,-?\d+\.\d+/g;
             let match = interceptedResult.match(pattern)[0];
-            let split = match.split(",");
+            let split = match.split(",")
 
-            let lat = Number.parseFloat(split[0]);
-            let lng = Number.parseFloat(split[1]);
+            let lat = Number.parseFloat(split[0])
+            let lng = Number.parseFloat(split[1])
 
-            globalCoordinates.lat = lat;
-            globalCoordinates.lng = lng;
-
-            if (settings.showCoordinates) {
-                showCoordinatesOnScreen();
-            }
+            globalCoordinates.lat = lat
+            globalCoordinates.lng = lng
         });
     }
-    // Call the original open function
     return originalOpen.apply(this, arguments);
 };
 
-// Function to place marker
-function placeMarker() {
-    let {lat, lng} = globalCoordinates;
+function placeMarker(safeMode){
+    let {lat,lng} = globalCoordinates
 
-    let element = document.querySelectorAll('[class^="guess-map_canvas__"]')[0];
-    if (!element) {
-        return;
+    if (safeMode) {
+        const sway = [Math.random() > 0.5, Math.random() > 0.5]
+        const multiplier = Math.random() * 4
+        const horizontalAmount = Math.random() * multiplier
+        const verticalAmount = Math.random() * multiplier
+        sway[0] ? lat += verticalAmount : lat -= verticalAmount
+        sway[1] ? lng += horizontalAmount : lat -= horizontalAmount
     }
-    const keys = Object.keys(element);
-    const key = keys.find(key => key.startsWith("__reactFiber$"));
-    const props = element[key];
-    const x = props.return.return.memoizedProps.map.__e3_.click;
-    const y = Object.keys(x)[0];
+
+    let element = document.querySelectorAll('[class^="guess-map_canvas__"]')[0]
+    if(!element){
+        placeMarkerStreaks()
+        return
+    }
+    const keys = Object.keys(element)
+    const key = keys.find(key => key.startsWith("__reactFiber$"))
+    const props = element[key]
+    const x = props.return.return.memoizedProps.map.__e3_.click
+    const y = Object.keys(x)[0]
 
     const z = {
-        latLng: {
+        latLng:{
             lat: () => lat,
             lng: () => lng,
         }
-    };
+    }
 
-    const xy = x[y];
-    const a = Object.keys(x[y]);
+    const xy = x[y]
+    const a = Object.keys(x[y])
 
-    for (let i = 0; i < a.length ; i++) {
-        let q = a[i];
-        if (typeof xy[q] === "function") {
-            xy[q](z);
+    for(let i = 0; i < a.length ;i++){
+        let q = a[i]
+        if (typeof xy[q] === "function"){
+            xy[q](z)
         }
     }
 }
 
-// Function to embed location in Google Maps within the main window
+function placeMarkerStreaks(){
+    let {lat,lng} = globalCoordinates
+    let element = document.getElementsByClassName("region-map_mapCanvas__R95Ki")[0]
+    if(!element){
+        return
+    }
+    const keys = Object.keys(element)
+    const key = keys.find(key => key.startsWith("__reactFiber$"))
+    const props = element[key]
+    const x = props.return.return.memoizedProps.map.__e3_.click
+    const y = Object.keys(x)
+    const w = "(e.latLng.lat(),e.latLng.lng())}"
+    const v = {
+        latLng:{
+            lat: () => lat,
+            lng: () => lng,
+        }
+    }
+    for(let i = 0; i < y.length; i++){
+        const curr = Object.keys(x[y[i]])
+        let func = curr.find(l => typeof x[y[i]][l] === "function")
+        let prop = x[y[i]][func]
+        if(prop && prop.toString().slice(5) === w){
+            prop(v)
+        }
+    }
+}
+
 function mapsFromCoords() {
-    const {lat, lng} = globalCoordinates;
+    const {lat,lng} = globalCoordinates
     if (!lat || !lng) {
         return;
     }
 
-    const mapUrl = `https://maps.google.com/?output=embed&q=${lat},${lng}&ll=${lat},${lng}&z=5`;
-
-    // Create an iframe element and set its attributes
-    let iframe = document.createElement('iframe');
-    iframe.setAttribute('id', 'googleMapsIframe');
-    iframe.setAttribute('src', mapUrl);
-    iframe.setAttribute('width', '300'); // Adjust width as needed
-    iframe.setAttribute('height', '300'); // Adjust height as needed
-    iframe.setAttribute('frameborder', '0');
-    iframe.setAttribute('style', 'position:fixed;top:10px;right:10px;width:300px;height:300px;z-index:9999;opacity:0.5;');
-
-    // Append the iframe to the body of the document
-    document.body.appendChild(iframe);
-}
-
-// Function to close the embedded Google Maps iframe
-function closeMaps() {
-    let iframe = document.getElementById('googleMapsIframe');
-    if (iframe) {
-        iframe.parentNode.removeChild(iframe);
-    }
-}
-
-// Function to show coordinates on screen
-function showCoordinatesOnScreen() {
-    let coordDiv = document.getElementById('coordinatesDiv');
-    if (!coordDiv) {
-        coordDiv = document.createElement('div');
-        coordDiv.setAttribute('id', 'coordinatesDiv');
-        coordDiv.setAttribute('style', 'position:fixed;bottom:10px;left:10px;background:black;color:white;padding:10px;border-radius:5px;opacity:0.8;z-index:9999;');
-        document.body.appendChild(coordDiv);
-    }
-    coordDiv.innerHTML = `Latitude: ${globalCoordinates.lat}<br>Longitude: ${globalCoordinates.lng}`;
-}
-
-// Function to hide coordinates from screen
-function hideCoordinatesFromScreen() {
-    let coordDiv = document.getElementById('coordinatesDiv');
-    if (coordDiv) {
-        coordDiv.parentNode.removeChild(coordDiv);
-    }
-}
-// Function to open settings UI
-function openSettings() {
-    let settingsDiv = document.getElementById('settingsDiv');
-    if (!settingsDiv) {
-        settingsDiv = document.createElement('div');
-        settingsDiv.setAttribute('id', 'settingsDiv');
-        settingsDiv.setAttribute('style', `
-            position:fixed;
-            top:50px;
-            right:50px;
-            width:300px;
-            height:350px;
-            background:rgba(0, 0, 0, 0.8);
-            color:white;
-            z-index:9999;
-            padding:20px;
-            border:1px solid black;
-            border-radius:15px;
-            `);
-        settingsDiv.innerHTML = `
-            <h3 style="margin-top: 0;">Settings</h3>
-            <label for="placeMarkerKey">Place Marker Key:</label><br>
-            <input type="text" id="placeMarkerKey" value="${keyBindings.placeMarker}" maxlength="1" style="background: white; color: black; width: 100%;"><br><br>
-            <label for="openMapKey">Open Map Key:</label><br>
-            <input type="text" id="openMapKey" value="${keyBindings.openMap}" maxlength="1" style="background: white; color: black; width: 100%;"><br><br>
-            <label for="openSettingsKey">Open Settings Key:</label><br>
-            <input type="text" id="openSettingsKey" value="${keyBindings.openSettings}" maxlength="1" style="background: white; color: black; width: 100%;"><br><br>
-            <label for="showCoordinatesToggle">Show Coordinates:</label><br>
-            <input type="checkbox" id="showCoordinatesToggle" ${settings.showCoordinates ? 'checked' : ''} style="width: auto;"><br><br>
-            <button id="saveSettingsBtn" style="background: gray; color: white; border: none; border-radius: 5px; padding: 5px 10px; margin-right: 10px;">Save</button>
-            <button id="reloadBtn" style="background: gray; color: white; border: none; border-radius: 5px; padding: 5px 10px;">Reload</button>
-            <button id="closeSettingsBtn" style="background: gray; color: white; border: none; border-radius: 5px; padding: 5px 10px;">Close</button>
-        `;
-        document.body.appendChild(settingsDiv);
-
-        // Add event listener to close button
-        document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
-
-        // Add event listener to save button
-        document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
-
-        // Add event listener to reload button
-        document.getElementById('reloadBtn').addEventListener('click', reloadPage);
-
-        // Add hover effect to buttons
-        const buttons = settingsDiv.querySelectorAll('button');
-        buttons.forEach(button => {
-            button.addEventListener('mouseover', () => {
-                button.style.backgroundColor = 'darkgray';
-            });
-            button.addEventListener('mouseout', () => {
-                button.style.backgroundColor = 'gray';
-            });
-        });
-    } else {
-        settingsDiv.style.display = 'block';
-    }
-}
-
-// Function to reload the page
-function reloadPage() {
-    location.reload();
-}
-
-// Function to close settings UI
-function closeSettings() {
-    let settingsDiv = document.getElementById('settingsDiv');
-    if (settingsDiv) {
-        settingsDiv.style.display = 'none';
-    }
-}
-
-// Function to save settings
-function saveSettings() {
-    keyBindings.placeMarker = document.getElementById('placeMarkerKey').value;
-    keyBindings.openMap = document.getElementById('openMapKey').value;
-    keyBindings.openSettings = document.getElementById('openSettingsKey').value;
-    settings.showCoordinates = document.getElementById('showCoordinatesToggle').checked;
-
-    // Save settings to localStorage
-    localStorage.setItem('keyBindings', JSON.stringify(keyBindings));
-    localStorage.setItem('settings', JSON.stringify(settings));
-
-    alert('Settings saved!');
-}
-
-
-// Event listener for key bindings
-let onKeyDown = (e) => {
-    if (e.key === keyBindings.placeMarker) {
-        e.stopImmediatePropagation();
-        placeMarker(); // Exact location for 5000 points
-    }
-    if (e.key === keyBindings.openMap) {
-        e.stopImmediatePropagation();
-        if (e.ctrlKey) {
-            closeMaps();
-        } else {
-            mapsFromCoords();
+    if (nativeOpen) {
+        const nativeOpenCodeIndex = nativeOpen.toString().indexOf('native code')
+        if (nativeOpenCodeIndex === 19 || nativeOpenCodeIndex === 23) {
+            nativeOpen(`https://maps.google.com/?output=embed&q=${lat},${lng}&ll=${lat},${lng}&z=5`);
         }
     }
-    if (e.key === keyBindings.openSettings && e.altKey) {
+}
+
+let onKeyDown = (e) => {
+    if (e.keyCode === 49) {
         e.stopImmediatePropagation();
-        openSettings();
+        placeMarker(true)
     }
-};
+    if (e.keyCode === 50) {
+        e.stopImmediatePropagation();
+        placeMarker(false)
+    }
+    if (e.keyCode === 51) {
+        e.stopImmediatePropagation();
+        mapsFromCoords(false)
+    }
+}
 
-// Load settings when the script runs
-loadSettings();
-
-// Add keydown event listener
 document.addEventListener("keydown", onKeyDown);
