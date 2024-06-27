@@ -128,15 +128,15 @@ function mapsFromCoords() {
 }
 
 let onKeyDown = (e) => {
-    if (e.keyCode === 49) {
+    if (e.keyCode === 89) {
         e.stopImmediatePropagation();
         placeMarker(true)
     }
-    if (e.keyCode === 50) {
+    if (e.keyCode === 88) {
         e.stopImmediatePropagation();
         placeMarker(false)
     }
-    if (e.keyCode === 51) {
+    if (e.keyCode === 67) {
         e.stopImmediatePropagation();
         mapsFromCoords(false)
     }
