@@ -1,6 +1,6 @@
 # Geoguessr Location Finder
 
-This is a Tampermonkey tool that automatically finds the location in Geoguessr.
+This is a powerful Tampermonkey tool designed to enhance your Geoguessr experience by automatically pinpointing the exact location. With this tool, you can easily score 5000 points by placing a marker at the precise coordinates provided by Google Street View data. Additionally, you can view the location on Google Maps directly within the game interface. The script offers customizable key bindings and settings to tailor the experience to your preferences.
 
 ## Features
 
