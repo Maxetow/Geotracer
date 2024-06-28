@@ -34,7 +34,9 @@
 
 ## Tested Game Modes
 
-- The script has been tested primarily on Firefox.
+script has been tested 28.06.2024
+- Firefox
+- Edge
 
 ## Disclaimer
 We decline all responsability if code is not used for safe usage for educational purpose
