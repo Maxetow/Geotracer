@@ -1,14 +1,15 @@
-# Geoguessr Location Finder
-Disclaimer this is an educational tool
+# Geotracer Lite (By Maxetow)
 
-This is a powerful Tampermonkey tool designed to enhance your Geoguessr experience by automatically pinpointing the exact location. With this tool, you can easily score 5000 points by placing a marker at the precise coordinates provided by Google Street View data. Additionally, you can view the location on Google Maps directly within the game interface. The script offers customizable key bindings and settings to tailor the experience to your preferences.
+## Overview
+
+**Geotracer** is a powerful userscript designed to enhance your GeoGuessr experience by offering advanced map interaction tools. It intercepts specific Google Maps API requests to retrieve coordinates and places markers automatically, allowing you to score high and navigate with ease.
 
 ## Features
 
-- **Press `y`** to score 5000 Points
-- **Press `c`** to open the location in Google Maps (Ctrl + `c` to close the map)
-- **Alt + `x`** to open settings and customize key bindings
-
+- **Automatic Scoring**: Press 'Y' to place a marker in a safe mode. The marker is placed with a slight randomization to simulate a realistic guess.
+- **Google Maps Integration**: Press 'C' to open the current location in Google Maps, providing a seamless way to explore the guessed location further. Opens an iframe on the website.
+- **Safe Mode**: Ensures marker placement with a slight random offset to avoid detection and simulate human-like guesses
+  
 ## Installation
 
 1. **Install Tampermonkey**
@@ -19,7 +20,7 @@ This is a powerful Tampermonkey tool designed to enhance your Geoguessr experien
 
 3. **Enjoy!**
    - Use the features responsibly to avoid getting banned.
-
+  
 ## Usage
 
 - **Press `y`** to place a marker at the exact location for 5000 points.
@@ -53,4 +54,3 @@ This is a powerful Tampermonkey tool designed to enhance your Geoguessr experien
 
 ## Disclaimer
 
-We (Maxetow or any person associated with this script) decline all responsibility in case of ban or misuse of this script.
